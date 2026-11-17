@@ -1,0 +1,27 @@
+# Compiled Binaries & Object Files
+*.exe
+*.o
+*.obj
+*.dll
+*.so
+*.dylib
+
+# CMake / Build outputs
+build/
+bin/
+CMakeFiles/
+CMakeCache.txt
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Word / Office backups & lock files
+*.bak
+~$*.docx

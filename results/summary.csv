@@ -1,0 +1,6 @@
+strategy,mean_catch_rate,mean_time_saved,mean_coverage,mean_algo_ms,p95_algo_ms,timeout_count,over_budget_count
+"Random baseline",0.605263,52.8656,0.728498,0,0,0,0
+"Greedy Ratio",0.690789,53.3424,0.788855,0,0,0,0
+"Greedy Set Cover",0.730263,53.3881,0.878567,0,0,0,0
+"Knapsack DP",0.697368,52.8453,0.786831,0,0,0,69
+"Branch & Bound",0.743421,52.1683,0.960905,0.00237654,0,0,96

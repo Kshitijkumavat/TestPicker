@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TestPicker — Regression Test Selection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Minimal Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>TestPicker</h1>
+        <p>Regression Test Selection Engine</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <select id="presetSelect" class="select-clean">
+        <option value="monorepo">Preset: Core Monorepo (40 files, 30 tests)</option>
+        <option value="fintech">Preset: FinTech Gateway (70 files, 60 tests)</option>
+        <option value="compiler">Preset: Compiler Runtime (90 files, 80 tests)</option>
+      </select>
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+
+    <!-- Top Control Bar -->
+    <section class="control-bar">
+      <!-- Changed Files Picker -->
+      <div>
+        <div class="control-label">
+          <span>Modified Source Files</span>
+          <span id="changedCount" style="color:var(--rose-primary);">3 files changed</span>
+        </div>
+        <div id="changedChipsContainer" class="chips-row">
+          <!-- Dynamic file chips -->
+        </div>
+      </div>
+
+      <!-- Budget Slider -->
+      <div>
+        <div class="control-label">
+          <span>Time Budget</span>
+          <span id="budgetVal"
+            style="font-family:var(--font-mono); color:var(--indigo-primary); font-weight:700;">60s</span>
+        </div>
+        <div class="range-container">
+          <input type="range" id="budgetSlider" class="slider-input" min="10" max="200" step="5" value="60">
+          <div
+            style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-dim); font-family:var(--font-mono);">
+            <span>10s</span>
+            <span>60s</span>
+            <span>200s</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action -->
+      <div>
+        <div class="control-label">
+          <span>Action</span>
+        </div>
+        <button id="btnRandomCommit" class="btn-minimal" style="width:100%;">
+          Random Commit
+        </button>
+      </div>
+    </section>
+
+    <!-- Section Title -->
+    <div class="section-meta">
+      <h2>Algorithm Strategy Evaluation</h2>
+      <span id="metaAffectedCount">Computing affected tests...</span>
+    </div>
+
+    <!-- 5 Strategy Cards -->
+    <section id="strategyGrid" class="strategy-grid">
+      <!-- Dynamically populated 5 strategy cards -->
+    </section>
+
+    <!-- Bottom Panels: Execution Order & Simulation Feedback -->
+    <section class="bottom-grid">
+
+      <!-- Kahn Topological Execution Order -->
+      <div class="panel-clean">
+        <div class="panel-header">
+          <span class="panel-title">Topological Execution Sequence (Kahn's Algorithm)</span>
+          <span id="kahnOrderCount" style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">0
+            scheduled</span>
+        </div>
+        <div id="kahnSequenceContainer" class="kahn-sequence">
+          <!-- Dynamically populated sequence -->
+        </div>
+      </div>
+
+      <!-- Simulation Feedback Box -->
+      <div class="panel-clean">
+        <div class="panel-header">
+          <span class="panel-title">Planted Bug Simulation</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Ground Truth</span>
+        </div>
+        <div id="simulationAlertBox">
+          <div class="sim-alert">
+            <div class="sim-alert-title">Click "Simulate Run"</div>
+            <div class="sim-alert-desc">Test any strategy against the planted bug in this commit to verify detection.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Benchmark Summary Section -->
+    <section class="benchmark-container">
+      <div
+        style="padding:14px 20px; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:700; font-size:0.9rem; color:var(--text-title);">500-Commit Empirical Benchmark
+          Performance</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">Source:
+          results/summary.csv</span>
+      </div>
+      <table class="clean-table">
+        <thead>
+          <tr>
+            <th>Strategy</th>
+            <th>Bug Detection Rate</th>
+            <th>Mean Time Saved</th>
+            <th>File Coverage</th>
+            <th>Algo Latency</th>
+            <th>P95 Latency</th>
+            <th>Timeouts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Random baseline</td>
+            <td class="td-mono">60.5%</td>
+            <td class="td-mono">52.87 s</td>
+            <td class="td-mono">72.85%</td>
+            <td class="td-mono">0.002 ms</td>
+            <td class="td-mono">0.00 ms</td>
+            <td class="td-mono">0</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Greedy Ratio</td>
+            <td class="td-mono">69.1%</td>
+            <td class="td-mono">53.34 s</td>
+            <td class="td-mono">78.89%</td>
+            <td class="td-mono">0.000 ms</td>
+            <td class="td-mono">0.00 ms</td>
+            <td class="td-mono">0</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Greedy Set Cover</td>
+            <td class="td-mono">73.0%</td>
+            <td class="td-mono">53.39 s</td>
+            <td class="td-mono">87.86%</td>
+            <td class="td-mono">0.009 ms</td>
+            <td class="td-mono">0.00 ms</td>
+            <td class="td-mono">0</td>
+          </tr>
+          <tr style="background:#f5f3ff;">
+            <td style="font-weight:600; color:var(--indigo-primary);">Knapsack DP</td>
+            <td class="td-mono" style="font-weight:700; color:var(--indigo-primary);">69.7%</td>
+            <td class="td-mono">52.85 s</td>
+            <td class="td-mono">78.68%</td>
+            <td class="td-mono">0.019 ms</td>
+            <td class="td-mono">0.00 ms</td>
+            <td class="td-mono">0</td>
+          </tr>
+          <tr style="background:#f0fdf4;">
+            <td style="font-weight:600; color:var(--emerald-primary);">Branch & Bound</td>
+            <td class="td-mono" style="font-weight:700; color:var(--emerald-primary);">74.3%</td>
+            <td class="td-mono">52.17 s</td>
+            <td class="td-mono" style="font-weight:700; color:var(--emerald-primary);">96.09%</td>
+            <td class="td-mono">0.003 ms</td>
+            <td class="td-mono">0.00 ms</td>
+            <td class="td-mono">0</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

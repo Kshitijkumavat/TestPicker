@@ -1,0 +1,2 @@
+total_ops,custom_probes_per_lookup,custom_load_factor,custom_time_ms,std_time_ms
+50000,1.6832,0.345123,0.545,0
